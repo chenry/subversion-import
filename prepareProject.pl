@@ -48,43 +48,20 @@ sub createTrunkDir {
   opendir(CURR_PROJ_DIR, $currProjDir);
   my @allFiles = readdir(CURR_PROJ_DIR);
   my $trunkDir = "$currProjDir/trunk";
-  mkdir("$currProjDir/trunk");
+  mkdir("$trunkDir");
+  mkdir("$trunkDir/logs");
+  mkdir("$trunkDir/data");
 
   # move all of the files into the trunkDir
   foreach my $currFile (@allFiles) {
     my $fullPathCurrFile = "$currProjDir/$currFile";
     if (-d $fullPathCurrFile && $currFile !~ /^\./) {
       move($fullPathCurrFile, "$trunkDir/$currFile");
-	    #recursiveAddFolderToDestinationDir($fullPathCurrFile, $currFile, $trunkDir);
     } else {
       move($fullPathCurrFile, $trunkDir);  
     }
   } 
-
   closedir(CURR_PROJ_DIR);
-}
-
-sub recursiveAddFolderToDestinationDir() {
-  my ($fullPathCurrDir, $currDir, $destDir) = @_;
-  
-  # make the directory in the destDir
-
-  mkdir("$destDir/$currDir");
-  opendir(DIR, $fullPathCurrDir);
-  my @allFiles = readdir(DIR);
-  closedir(DIR);
-
-  foreach my $currFile (@allFiles) {
-    my $fullPathCurrFile = "$fullPathCurrDir/$currFile";
-    if (-d $fullPathCurrFile && $currFile !~ /^\./) {
-      print"$fullPathCurrFile is directory and we will copy it to $destDir/$currDir\n"; 
-      recursiveAddFolderToDestinationDir($fullPathCurrFile, $currFile, "$destDir/$currDir");
-    } elsif ($currFile =~ /^\./) {
-    } else {
-      print"will copy $currFile to $destDir/$currDir\n";
-    }
-  }
-
 }
 
 sub validateArgs {
