@@ -54,7 +54,7 @@ sub createTrunkDir {
   foreach my $currFile (@allFiles) {
     my $fullPathCurrFile = "$currProjDir/$currFile";
     if (-d $fullPathCurrFile && $currFile !~ /^\./) {
-	    #recursiveAddFolderToDestinationDir($fullPathCurrFile, $trunkDir);
+	    recursiveAddFolderToDestinationDir($fullPathCurrFile, $currFile, $trunkDir);
     } else {
       move($fullPathCurrFile, $trunkDir);  
     }
@@ -63,7 +63,26 @@ sub createTrunkDir {
   closedir(CURR_PROJ_DIR);
 }
 
+sub recursiveAddFolderToDestinationDir() {
+  my ($fullPathCurrDir, $currDir, $destDir) = @_;
+  
+  # make the directory in the destDir
 
+  mkdir("$destDir/$currDir");
+  opendir(DIR, $fullPathCurrDir);
+  my @allFiles = readdir(DIR);
+  closedir(DIR);
+
+  foreach my $currFile (@allFiles) {
+    my $fullPathCurrFile = "$fullPathCurrDir/$currFile";
+    if (-d $fullPathCurrFile && $currFile !~ /^\./) {
+      print"$fullPathCurrFile is directory and we will copy it to $destDir/$currDir\n"; 
+    } else {
+      print"will copy $currFile to $destDir/$currDir\n";
+    }
+  }
+
+}
 
 sub validateArgs {
   my $argSize = @ARGV;
