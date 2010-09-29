@@ -1,6 +1,7 @@
 #!/opt/local/bin/perl -w
 
 use strict;
+use File::Copy;
 my $projectDir;
 my @projectDirectories;
 
@@ -44,15 +45,24 @@ sub createTrunkDir {
   my ($currProjDir) = @_;
 
   # build the list of files and directories that exist in the current project directory
+  opendir(CURR_PROJ_DIR, $currProjDir);
   my @allFiles = readdir(CURR_PROJ_DIR);
   my $trunkDir = "$currProjDir/trunk";
   mkdir("$currProjDir/trunk");
 
   # move all of the files into the trunkDir
-  
+  foreach my $currFile (@allFiles) {
+    my $fullPathCurrFile = "$currProjDir/$currFile";
+    if (-d $fullPathCurrFile && $currFile !~ /^\./) {
+      recursiveAddFolderToDestinationDir($fullPathCurrFile, $trunkDir);
+    } else {
+      move($fullPathCurrFile, $trunkDir);  
+    }
+  } 
 
   closedir(CURR_PROJ_DIR);
 }
+
 
 
 sub validateArgs {
