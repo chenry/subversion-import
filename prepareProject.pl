@@ -37,7 +37,7 @@ sub transformProjectDir {
   print "Current project Directory: $currProjDir\n";
 
   createTrunkDir($currProjDir);
-  mkdir("$currProjDir/branch");
+  mkdir("$currProjDir/branches");
   mkdir("$currProjDir/tags");
 }
 
