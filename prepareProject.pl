@@ -77,6 +77,7 @@ sub recursiveAddFolderToDestinationDir() {
     my $fullPathCurrFile = "$fullPathCurrDir/$currFile";
     if (-d $fullPathCurrFile && $currFile !~ /^\./) {
       print"$fullPathCurrFile is directory and we will copy it to $destDir/$currDir\n"; 
+    } elsif ($currFile =~ /^\./) {
     } else {
       print"will copy $currFile to $destDir/$currDir\n";
     }
