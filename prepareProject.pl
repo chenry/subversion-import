@@ -54,7 +54,7 @@ sub createTrunkDir {
   foreach my $currFile (@allFiles) {
     my $fullPathCurrFile = "$currProjDir/$currFile";
     if (-d $fullPathCurrFile && $currFile !~ /^\./) {
-      move($fullPathCurrFile, $trunkDir);
+      move($fullPathCurrFile, "$trunkDir/$currFile");
 	    #recursiveAddFolderToDestinationDir($fullPathCurrFile, $currFile, $trunkDir);
     } else {
       move($fullPathCurrFile, $trunkDir);  
