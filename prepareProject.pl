@@ -54,7 +54,8 @@ sub createTrunkDir {
   foreach my $currFile (@allFiles) {
     my $fullPathCurrFile = "$currProjDir/$currFile";
     if (-d $fullPathCurrFile && $currFile !~ /^\./) {
-	    recursiveAddFolderToDestinationDir($fullPathCurrFile, $currFile, $trunkDir);
+      move($fullPathCurrFile, $trunkDir);
+	    #recursiveAddFolderToDestinationDir($fullPathCurrFile, $currFile, $trunkDir);
     } else {
       move($fullPathCurrFile, $trunkDir);  
     }
@@ -77,7 +78,7 @@ sub recursiveAddFolderToDestinationDir() {
     my $fullPathCurrFile = "$fullPathCurrDir/$currFile";
     if (-d $fullPathCurrFile && $currFile !~ /^\./) {
       print"$fullPathCurrFile is directory and we will copy it to $destDir/$currDir\n"; 
-      #recursiveAddFolderToDestinationDir($fullPathCurrFile, $currFile, "$destDir/$currDir");
+      recursiveAddFolderToDestinationDir($fullPathCurrFile, $currFile, "$destDir/$currDir");
     } elsif ($currFile =~ /^\./) {
     } else {
       print"will copy $currFile to $destDir/$currDir\n";
