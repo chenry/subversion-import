@@ -1,0 +1,7 @@
+this is just a simple script that I wrote in order to help prepare projects so that they
+will be ready to be imported into subversion.  It follows the following structure:
+
+proj/
+	- branches
+	- tags
+	- trunk
