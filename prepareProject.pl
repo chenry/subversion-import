@@ -39,31 +39,14 @@ sub transformProjectDir {
   createTrunkDir($currProjDir);
   mkdir("$currProjDir/branches");
   mkdir("$currProjDir/tags");
+
+  # handle the initial tag dir.
   my $initialTagDir = "$currProjDir/tags/v-0-initialImport";
   mkdir($initialTagDir);
   system("cp -r $currProjDir/trunk/* $initialTagDir");
 
 }
 
-sub createInitialTagDir {
-  my ($trunkDir, $initialTagDir) = @_;
-  
-  opendir(TRUNK_DIR, $trunkDir);
-  my @allFiles = readdir(TRUNK_DIR);
-
-  foreach my $currFile (@allFiles) {
-    my $fullPathCurrFile = "$trunkDir/$currFile";
-    if (-d $fullPathCurrFile && $currFile !~ /^\./) {
-      move($fullPathCurrFile, "$trunkDir/$currFile");
-    } else {
-      move($fullPathCurrFile, $trunkDir);  
-    }
-  }
-
-
-  closedir(TRUNK_DIR);
-
-}
 sub createTrunkDir {
   my ($currProjDir) = @_;
 
