@@ -41,15 +41,28 @@ sub transformProjectDir {
   mkdir("$currProjDir/tags");
   my $initialTagDir = "$currProjDir/tags/v-0-initialImport";
   mkdir($initialTagDir);
-  createInitialTagDir("$currProjDir/trunk", $initialTagDir);
+  system("cp -r $currProjDir/trunk $initialTagDir");
 
 }
 
 sub createInitialTagDir {
   my ($trunkDir, $initialTagDir) = @_;
   print "copy from $currProjDir/trunk to $initialTagDir\n";
+  
+  opendir(TRUNK_DIR, $trunkDir);
+  my @allFiles = readdir(TRUNK_DIR);
+
+  foreach my $currFile (@allFiles) {
+    my $fullPathCurrFile = "$trunkDir/$currFile";
+    if (-d $fullPathCurrFile && $currFile !~ /^\./) {
+      move($fullPathCurrFile, "$trunkDir/$currFile");
+    } else {
+      move($fullPathCurrFile, $trunkDir);  
+    }
+  }
 
 
+  closedir(TRUNK_DIR);
 
 }
 sub createTrunkDir {
