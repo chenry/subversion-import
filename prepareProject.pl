@@ -40,9 +40,18 @@ sub transformProjectDir {
   mkdir("$currProjDir/branches");
   mkdir("$currProjDir/tags");
   my $initialTagDir = "$currProjDir/tags/v-0-initialImport";
-  print "copy from $currProjDir/trunk to $initialTagDir\n";
+  mkdir($initialTagDir);
+  createInitialTagDir("$currProjDir/trunk", $initialTagDir);
+
 }
 
+sub createInitialTagDir {
+  my ($trunkDir, $initialTagDir) = @_;
+  print "copy from $currProjDir/trunk to $initialTagDir\n";
+
+
+
+}
 sub createTrunkDir {
   my ($currProjDir) = @_;
 
